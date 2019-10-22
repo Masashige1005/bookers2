@@ -1,0 +1,26 @@
+<div class = "container">
+	<h1>User info</h1>
+	<% if @user.errors.any? %>
+		<div id="error_explanation">
+	      <h2><%= pluralize(@user.errors.count, "error") %> prohibited 	this user from being saved:</h2>
+		<div class = "alert alert-warning">
+			<ul>
+				<% @user.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+	<%= form_for(@user) do |f| %>
+		<h3 class = "name">Name</h3>
+			<%= f.text_field :name %>
+
+		<h3 class = "introduction">Introduction</h3>
+			<%= f.text_area :introduction %>
+
+		<h3>Image</h3>
+			<%= f.attachment_field :profile_image %>
+
+		<input type="submit" name="commit" value="Update User">
+	<% end %>
+</div>

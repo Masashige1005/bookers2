@@ -1,0 +1,38 @@
+<div class = "container">
+	<% if flash[:signup] %>
+		<div class = "alert alert-success">
+			<%= flash[:signup] %>
+		</div>
+	<% elsif flash[:signin] %>
+		<div class = "alert alert-success">
+			<%= flash[:signin] %>
+		</div>
+	<% elsif flash[:userup] %>
+		<div class = "alert alert-success">
+			<%= flash[:userup] %>
+		</div>
+	<% end %>
+
+	<%= render 'books/list', book: @book, user: @user %>
+
+	<div class = "col-xs-9" style= "background-color:white;">
+		<h1>Book</h1>
+		<table class = "table table-striped">
+			<th>
+				<td>Title</td>
+				<td>Opinion</td>
+			</th>
+			<% @user.books.each do |f| %>
+			<tr>
+				<td>
+					<%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+				</td>
+				<td>
+					<%= link_to "#{f.title}", book_path(f.id) %>
+				</td>
+				<td><%= f.body %></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,31 @@
+<div class = "container">
+
+	<% if flash[:notice] %>
+		<div class = "alert alert-success">
+			<%= flash[:notice] %>
+		</div>
+	<% end %>
+
+	<%= render 'books/list', book: @book, user: @user %>
+
+	<div class = "col-xs-9" style= "background-color:white;">
+		<h1>Book detail</h1>
+		<table class = "table table-striped">
+			<tr>
+				<td>
+					<!-- 投稿詳細ページでユーザー画像を表示する -->
+					<%= attachment_image_tag @user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg" %><br>
+					<!--投稿詳細ページでユーザー名を表示、紐付けでユーザー情報ページまで飛べるようにする。-->
+					<%= link_to @user.name , user_path(@user.id) %>
+				</td>
+				<td><%= @detail.title %></td>
+				<td><%= @detail.body %></td>
+				<!-- 投稿者のみに編集・削除の権限を与える -->
+				<% if user_signed_in? && @detail.user_id == current_user.id %>
+					<td><%= link_to 'Edit', edit_book_path(@detail.id), class: "btn-sm btn-success" %></td>
+					<td><%= link_to "Destroy", book_path, method: :delete, "data-confirm" => "本当に削除しますか？", class: "btn-sm btn-danger" %></td>
+				<% end %>
+			</tr>
+		</table>
+	</div>
+</div>
