@@ -31,6 +31,7 @@ class BooksController < ApplicationController
   def create
     #投稿したユーザーのidを保存します。
     @book = current_user.books.build(book_params)
+    #ユーザーIDのチェックするよ！
     @book.user_id = current_user.id
     if @book.save
       redirect_to book_path(@book), flash: {notice: 'You have created book successfully'}
@@ -52,6 +53,7 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
+    #削除権限は投稿者のみに与えらるよ！
     if @book.user_id == current_user.id
       @book.destroy
     end
@@ -60,6 +62,7 @@ class BooksController < ApplicationController
 
   def ensure_correct_user
     @book = Book.find(params[:id])
+    #ユーザーIDのチェックするよ！
     unless @book.user_id == current_user.id
       redirect_to books_path
     end

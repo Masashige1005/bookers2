@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
+
+  devise_for :users
+
   resources :books, only: [:index, :edit, :update, :create, :show, :destroy, :top]
-  resources :users, only: [:index, :edit, :update, :show, :destroy, :top]
+  resources :users, only: [:index, :edit, :update, :show, :destroy]
   resources :profile_images, only: [:new, :create]
   root 'books#top'
   get 'home/about'
   # delete 'books/:id' => 'books#destroy', as: 'destroy_book'
-  devise_for :users
+
 
   # resources :books
   # devise_scope :user do

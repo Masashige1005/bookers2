@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
+  #ログインしてないユーザーがプロフィールイメージに飛んでもガードします。
   before_action :authenticate_user!
+  #ユーザーのみが編集権限を持つように変更するよ！
   before_action :ensure_correct_user, {only: [:edit, :update]}
-  def top
-  end
 
   def index
   	@users = User.all
@@ -29,8 +29,10 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])
   end
 
+  #ここでユーザーのみが編集できるようにチェックするよ！
   def ensure_correct_user
     @user = User.find(params[:id])
+    #ユーザーIDのチェックするよ！
     unless @user.id == current_user.id
       redirect_to user_path(current_user)
     end
@@ -38,6 +40,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
+    #ここにname,introductionが定義されていないとViewで反映されないので注意だよ！
   	params.require(:user).permit(:name, :profile_image, :introduction)
   end
 end
